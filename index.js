@@ -20,7 +20,11 @@ app.post('/forms', urlencodedParser, [
                 .isLength({min:3}),
             check('email', 'Email invalido')
                 .isEmail()
-                .normalizeEmail()
+                .normalizeEmail(),
+            check('senha', "senha precisa ser igual ou maior q 6")
+                .isLength({min:6}),
+            check('senha', "As senhas são diferentes")                
+                .equals('senha1')
 
 ], (req, res)=> {
    
@@ -31,6 +35,10 @@ app.post('/forms', urlencodedParser, [
        res.render('pages/forms',{
             alerts
        })
+    }
+    else{
+       // console.log(req.body);
+        return res.json(req.body)
     }
 });
 
