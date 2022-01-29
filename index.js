@@ -1,6 +1,10 @@
 const express = require('express')
-const app = express()
+const bodyparser = require('body-parser')
+const {check, validationResult} = require('express-validator')
+const bodyParser = require('body-parser')
+const res = require('express/lib/response')
 
+const app = express()
 const port = process.env.PORT || 3000
 
 app.use('./css', express.static('public'));
@@ -8,7 +12,27 @@ app.use('./css', express.static('public'));
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+const urlencodedParser = bodyParser.urlencoded({extended: false})
 
+app.post('/forms', urlencodedParser, [
+            check('user', 'O nome do usuário precisa ter 3 ou mais caracteres')
+                .exists()
+                .isLength({min:3}),
+            check('email', 'Email invalido')
+                .isEmail()
+                .normalizeEmail()
+
+], (req, res)=> {
+   
+    const errors = validationResult(req)
+    if(!errors.isEmpty()){
+       // return res.status(422).jsonp(errors.array())
+       const alerts = errors.array()
+       res.render('pages/forms',{
+            alerts
+       })
+    }
+});
 
 app.get('/', function(req, res) {
     var mascots = [
