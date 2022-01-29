@@ -11,11 +11,41 @@
 
 <main>
     <div class="container">
-        <h1>This is great
-            <br/>
-            
+        <h1>Formaulário
         </h1>
-     
+
+        <% if(typeof alerts != 'undefined') { %>
+        <% alerts.forEach(function(errors) { %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  
+            <%= errors.msg%>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <% })%>
+          <% } %>
+
+
+        <form action="/forms" method="post">
+            <div class="form-group">
+                <label for="username" class="form-label">Nome</label>
+                <input type="user" class="form-control" name="user" id="user" aria-describedby="Usuário Ajuda"/>
+            </div>
+            <div class="form-group">
+                <label for="email" class="form-label">Emial</label>
+                <input type="email" class="form-control" name="email" id="email" aria-describedby="Email Ajuda"/>
+            </div>
+            <div class="form-group">
+                <label for="senha" class="form-label">Senha</label>
+                <input type="password" class="form-control" name="senha" id="senha" aria-describedby="Senha Ajuda"/>
+            </div>
+            <div class="form-group">
+                <label for="senha1" class="form-label">Senha Confirma</label>
+                <input type="password" class="form-control" name="senha1" id="senha1" aria-describedby="Senha verificação Ajuda"/>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
     </div>
 </main>
 
