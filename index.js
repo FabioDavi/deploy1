@@ -24,7 +24,7 @@ app.post('/forms', urlencodedParser, [
             check('senha', "senha precisa ser igual ou maior q 6")
                 .isLength({min:6}),
             check('senha', "As senhas são diferentes")                
-                .equals('senha1')
+                .not().equals('senha1')
 
 ], (req, res)=> {
    
